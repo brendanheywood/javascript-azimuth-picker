@@ -1,0 +1,31 @@
+<html>
+<head>
+<script type="application/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="application/javascript" src="http://raphaeljs.com/raphael.js"></script>
+<script type="application/javascript" src="../picker.js"></script>
+
+</head>
+<body>
+<div style="background: red">
+<div id="picker"></div>
+<input id="value" />
+</div>
+
+
+<script>
+$(function(){
+	var picker = AzimuthPicker({
+		id: 'picker',
+		size: 200,
+		accuracy: 4,
+		onchange: function(value){
+			$('#value').val(value);
+		}
+	});
+});
+</script>
+
+
+
+</body>
+</html>
