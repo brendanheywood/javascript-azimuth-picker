@@ -6,7 +6,7 @@
 
 </head>
 <body>
-<div style="background: red">
+<div>
 <div id="picker"></div>
 <input id="value" />
 </div>
@@ -16,7 +16,7 @@
 $(function(){
 	var picker = AzimuthPicker({
 		id: 'picker',
-		size: 200,
+		size: 140,
 		accuracy: 4,
 		onchange: function(value){
 			$('#value').val(value);

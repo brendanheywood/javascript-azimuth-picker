@@ -40,32 +40,32 @@ function AzimuthPicker(options){
 		return paper.path(["M", cx, cy, "L", x1, y1, "A", r, r, 0, +(endAngle - startAngle > 180), 0, x2, y2, "z"]).attr(params);
 	}
 
-	function makeWedge(c){
-		var ang1 = -90 - wedAng * (c+.5);
+	function makeWedge(no){
+		var ang1 = -90 - wedAng * (no+.5);
 		var w = sector(mx+margin, mx+margin, mx, ang1, ang1 + wedAng, {
 			'fill': cols.off,
-			'stroke-width': 2
+			'stroke-width': 1.8
 
 		});
 		w.mouseover(function(){
 			w.attr({fill: cols.hover});
 		});
 		w.mouseout(function(){
-			w.attr({fill: selected === c ? cols.selected : cols.off});
+			w.attr({fill: selected === no ? cols.selected : cols.off});
 		});
 		w.click(function(){
-			if (selected === c){
+			if (selected === no){
 				selected = '';
 				t.options.onchange('');
 				w.attr({fill: cols.off});
 				return;
 			}
-			if (selected){
+			if (selected !== ''){
 				// unselect old
 				wedges[selected].attr({fill: cols.off});
 			}
-			t.options.onchange( c*wedAng );
-			selected = c;
+			t.options.onchange( no*wedAng );
+			selected = no;
 			w.attr({fill: cols.selected});
 		});
 		return w;
