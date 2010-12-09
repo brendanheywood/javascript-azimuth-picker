@@ -12,7 +12,7 @@
 <div><div id="picker1"></div><input id="value1" /></div>
 <script>
 $(function(){
-	var picker = AzimuthPicker({
+	var picker = new AzimuthPicker({
 		id: 'picker1',
 		size: 140,
 		selected: 90,
@@ -24,11 +24,26 @@ $(function(){
 });
 </script>
 
+<h1>default value of 0</h1>
+<div><div id="picker12"></div><input id="value12" /></div>
+<script>
+$(function(){
+	var picker12 = new AzimuthPicker({
+		id: 'picker12',
+		size: 140,
+		selected: 0,
+		accuracy: 5,
+		onchange: function(value){
+			$('#value2').val(value);
+		}
+	});
+});
+</script>
 <h1>no default value</h1>
 <div><div id="picker2"></div><input id="value2" /></div>
 <script>
 $(function(){
-	var picker2 = AzimuthPicker({
+	var picker2 = new AzimuthPicker({
 		id: 'picker2',
 		size: 140,
 		accuracy: 5,
@@ -44,7 +59,7 @@ $(function(){
 <div><div id="picker3"></div><input id="value3" /></div>
 <script>
 $(function(){
-	var picker3 = AzimuthPicker({
+	var picker3 = new AzimuthPicker({
 		id: 'picker3',
 		size: 140,
 		accuracy: 5,
@@ -52,7 +67,7 @@ $(function(){
 			$('#value3').val(value);
 		}
 	});
-	picker3.setAngle(135);
+	picker3.setAzimuth(135);
 });
 </script>
 
