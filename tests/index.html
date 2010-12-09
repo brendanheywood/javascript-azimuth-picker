@@ -6,26 +6,55 @@
 
 </head>
 <body>
-<div>
-<div id="picker"></div>
-<input id="value" />
-</div>
 
 
+<h1>picker with default value of 90 (east)</h1>
+<div><div id="picker1"></div><input id="value1" /></div>
 <script>
 $(function(){
 	var picker = AzimuthPicker({
-		id: 'picker',
+		id: 'picker1',
 		size: 140,
+		selected: 90,
 		accuracy: 4,
 		onchange: function(value){
-			$('#value').val(value);
+			$('#value1').val(value);
+		}
+	});
+});
+</script>
+
+<h1>no default value</h1>
+<div><div id="picker2"></div><input id="value2" /></div>
+<script>
+$(function(){
+	var picker2 = AzimuthPicker({
+		id: 'picker2',
+		size: 140,
+		accuracy: 5,
+		onchange: function(value){
+			$('#value2').val(value);
 		}
 	});
 });
 </script>
 
 
+<h1>no value and then set programatically</h1>
+<div><div id="picker3"></div><input id="value3" /></div>
+<script>
+$(function(){
+	var picker3 = AzimuthPicker({
+		id: 'picker3',
+		size: 140,
+		accuracy: 5,
+		onchange: function(value){
+			$('#value3').val(value);
+		}
+	});
+	picker3.setAngle(135);
+});
+</script>
 
 </body>
 </html>

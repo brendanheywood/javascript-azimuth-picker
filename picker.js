@@ -23,13 +23,33 @@ function AzimuthPicker(options){
 	var w;
 	var ms = 4000;
 
-	// create background
-	p.circle(mx+margin,mx+margin,mx)
-	.attr({
-		fill: 'r#fff-#ccc'
-	});
+	var selected = t.options.selected ? Math.round(t.options.selected / wedAng) : '';
 
-	var selected = '';
+	function select(no){
+		no = no % wedgeCount;
+		// if the same the deselect
+		if (selected === no){
+			if (selected !== '') wedges[no].attr({fill: cols.off}).toBack();
+			no = '';
+		}
+
+		// unselect old
+		if (selected !== ''){
+			wedges[selected].attr({fill: cols.off}).toBack();
+		}
+		selected = no;
+		if (selected !== ''){
+			wedges[selected].attr({fill: cols.selected}).toFront();
+		}
+		t.options.onchange( selected === '' ? '' : selected*wedAng );
+
+		// display center
+		if (selected === ''){
+			center.attr({fill: cols.selected }).toFront();
+		} else {
+			center.attr({fill: cols.off });
+		}
+	}
 
 	function sector(cx, cy, r, startAngle, endAngle, params) {
 		var rad = Math.PI / 180;
@@ -43,30 +63,19 @@ function AzimuthPicker(options){
 	function makeWedge(no){
 		var ang1 = -90 - wedAng * (no+.5);
 		var w = sector(mx+margin, mx+margin, mx, ang1, ang1 + wedAng, {
-			'fill': cols.off,
+			'fill': selected === no ? cols.selected : cols.off,
 			'stroke-width': 1.8
 
 		});
 		w.mouseover(function(){
-			w.attr({fill: cols.hover});
+			w.attr({fill: cols.hover}).toFront();
 		});
 		w.mouseout(function(){
-			w.attr({fill: selected === no ? cols.selected : cols.off});
+			w.attr({fill: selected === no ? cols.selected : cols.off})
+			if (selected !== no){ w.toBack(); }
 		});
 		w.click(function(){
-			if (selected === no){
-				selected = '';
-				t.options.onchange('');
-				w.attr({fill: cols.off});
-				return;
-			}
-			if (selected !== ''){
-				// unselect old
-				wedges[selected].attr({fill: cols.off});
-			}
-			t.options.onchange( no*wedAng );
-			selected = no;
-			w.attr({fill: cols.selected});
+			select(no);
 		});
 		return w;
 	}
@@ -75,10 +84,16 @@ function AzimuthPicker(options){
 		wedges[c] = makeWedge(c);
 	}
 
-
 	// create centre
+	var center = paper.circle(mx+margin, mx+margin, t.options.size / 7)
+		.attr({fill: selected === '' ? cols.selected : cols.off })
+		.click(function(){
+			select('');
+		})
+		;
 
 
+	select(selected);
 
 }
 
