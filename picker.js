@@ -1,3 +1,6 @@
+/**
+ *
+ */
 function AzimuthPicker(options){
 
 	this.options = options;
@@ -9,7 +12,6 @@ function AzimuthPicker(options){
 		hover: 'blue',
 		selected: 'red'
 	};
-
 
 	var p = this.paper;
 	var margin = 5;
@@ -23,7 +25,6 @@ function AzimuthPicker(options){
 	var w;
 	var ms = 4000;
 
-	this.selected = 'selected' in t.options ? Math.round(t.options.selected / this.wedAng) : '';
 	var picker = this;
 
 
@@ -68,12 +69,12 @@ function AzimuthPicker(options){
 		})
 		;
 
-
-	this.select(this.selected);
-
+	if ('selected' in t.options){
+		this.setAzimuth(t.options.selected);
+	}
 }
 AzimuthPicker.prototype.select = function(no){
-	no = no % this.wedgeCount;
+	no = no === '' ? no : no % this.wedgeCount;
 	// if the same the deselect
 	if (this.selected === no){
 		if (this.selected !== '') this.wedges[no].attr({fill: this.cols.off}).toBack();
@@ -99,7 +100,8 @@ AzimuthPicker.prototype.select = function(no){
 }
 
 AzimuthPicker.prototype.setAzimuth = function(angle){
-	this.angle = angle;
+
+	this.select( Math.round(angle / this.wedAng) );
 	// do some mod stuff
 	// highlight the new one
 	// unhighligh the old one
